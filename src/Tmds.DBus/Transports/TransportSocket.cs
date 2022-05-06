@@ -27,6 +27,7 @@ namespace Tmds.DBus.Transports
         static readonly int EAGAIN = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? 35 : 11;
         const int SCM_RIGHTS = 1;
 
+#pragma warning disable 0649
         private unsafe struct msghdr
         {
             public IntPtr msg_name; //optional address
@@ -37,6 +38,7 @@ namespace Tmds.DBus.Transports
             public SizeT msg_controllen; //ancillary data buffer len
             public int msg_flags; //flags on received message
         }
+#pragma warning restore 0649
 
         private unsafe struct IOVector
         {
@@ -51,11 +53,13 @@ namespace Tmds.DBus.Transports
             public int cmsg_type; //protocol-specific type
         }
 
+#pragma warning disable 0649
         private unsafe struct cmsg_fd
         {
             public cmsghdr hdr;
             public fixed int fds[64];
         }
+#pragma warning restore 0649
 
         private class ReadContext
         {
